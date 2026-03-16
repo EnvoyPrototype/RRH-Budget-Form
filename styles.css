@@ -304,6 +304,7 @@ input[type="number"] { -moz-appearance: textfield; }
 /* ── PRINT ── */
 @media print {
   @page { size: letter portrait; margin: 0.2in 0.25in; }
+  body { zoom: 95%; }
   .columns { grid-template-columns: 1fr 1fr !important; gap: 0 10px !important; }
   .header-btn-row { display: none; }
   .header-org { padding: 5px 10px 3px; }
