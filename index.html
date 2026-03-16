@@ -10,20 +10,20 @@
 <body>
 <div class="page">
 
-  <!-- ACTION BUTTONS -->
-  <div class="action-bar">
-    <button class="btn btn-clear" onclick="clearForm()">Clear Form</button>
-    <button class="btn btn-print" onclick="window.print()">Print</button>
-  </div>
-
   <!-- HEADER -->
   <div class="header">
     <div class="header-title">CLIENT BUDGET</div>
     <div class="header-right">
-      <div class="header-org">Carpenter's Homeless<br>Prevention Program</div>
-      <div class="header-year-row">
-        <label for="year">Year:</label>
-        <input type="number" id="year" min="2000" max="2100" placeholder="Year">
+      <div class="header-org">
+        <span>Carpenter's Homeless Prevention Program</span>
+        <span class="header-year-inline">
+          <label for="year">Year:</label>
+          <input type="number" id="year" min="2000" max="2100" placeholder="Year">
+        </span>
+      </div>
+      <div class="header-btn-row">
+        <button class="btn btn-clear" onclick="clearForm()">Clear Form</button>
+        <button class="btn btn-print" onclick="window.print()">Print</button>
       </div>
     </div>
   </div>
@@ -40,7 +40,6 @@
     </div>
   </div>
 
-  <p class="instruction">These are expenses that you incur on a monthly basis. This budget is for everyone living in the household. If in doubt, include it on this budget form.</p>
 
   <!-- TWO-COLUMN FORM -->
   <div class="columns">
