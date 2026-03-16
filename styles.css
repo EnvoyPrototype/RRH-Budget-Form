@@ -297,8 +297,8 @@ input[type="number"] { -moz-appearance: textfield; }
 
 /* ── PRINT ── */
 @media print {
-  @page { size: letter portrait; margin: 0.4in; }
-  .columns { grid-template-columns: 1fr 1fr !important; gap: 0 14px !important; }
+  @page { size: letter portrait; margin: 0.3in; }
+  .columns { grid-template-columns: 1fr 1fr !important; gap: 0 10px !important; }
   .action-bar { display: none; }
   body { background: none; padding: 0; display: block; }
   .page {
@@ -307,13 +307,29 @@ input[type="number"] { -moz-appearance: textfield; }
     min-height: auto;
     padding: 0;
   }
+  /* tighten vertical rhythm */
+  .header { margin-bottom: 6px; }
+  .header-title { font-size: 15px; padding: 7px 16px; }
+  .header-org { font-size: 8.5px; padding: 4px 10px 2px; }
+  .header-year-row { padding: 2px 10px; }
+  .meta-row { margin-bottom: 5px; }
+  .instruction { font-size: 10px; margin-bottom: 6px; }
+  .section { margin-bottom: 3px; }
+  .section-head { font-size: 9px; padding: 2px 5px; }
+  .budget-table td { padding: 1px 4px; }
+  .budget-table td.cat { font-size: 10px; }
   .budget-table td.amt input {
+    font-size: 10px;
+    padding: 1px 4px;
     border: none;
     border-bottom: 1px solid #999;
     border-radius: 0;
     box-shadow: none;
     background: transparent;
   }
+  .total-bar { padding: 4px 10px; margin-top: 6px; }
+  .total-label { font-size: 11px; }
+  .total-value { font-size: 13px; padding: 2px 8px; }
   .meta-field input { background: transparent; }
   .header-year-row input { background: transparent; border: none; border-bottom: 1px solid #999; }
   .total-value { color: var(--accent) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
