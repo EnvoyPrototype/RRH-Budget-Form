@@ -9,8 +9,6 @@ const dateInput = document.getElementById('formDate');
 const today = new Date();
 dateInput.value = today.toISOString().slice(0, 10);
 
-const yearInput = document.getElementById('year');
-yearInput.value = today.getFullYear();
 
 function recalc() {
   const inputs = document.querySelectorAll('[data-total]');
