@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Budget – Carpenter's Homeless Prevention Program</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue:    #1a3a5c;
+    --blue-lt: #e8eef5;
+    --accent:  #c0392b;
+    --border:  #b0bec5;
+    --row-alt: #f4f7fa;
+    --text:    #1c2b3a;
+    --muted:   #546e7a;
+    --input-bg:#ffffff;
+    --radius:  3px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 13px;
+    color: var(--text);
+    background: #dde3ea;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 24px 16px;
+    min-height: 100vh;
+  }
+
+  .page {
+    background: #fff;
+    width: 8.5in;
+    min-height: 11in;
+    padding: 0.45in 0.45in 0.35in;
+    box-shadow: 0 4px 32px rgba(0,0,0,.18);
+  }
+
+  /* ── HEADER ── */
+  .header {
+    display: flex;
+    align-items: stretch;
+    border: 2px solid var(--blue);
+    margin-bottom: 10px;
+  }
+  .header-title {
+    background: var(--blue);
+    color: #fff;
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    padding: 10px 22px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+  .header-right {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    border-left: 2px solid var(--blue);
+  }
+  .header-org {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--blue);
+    padding: 6px 14px 4px;
+    line-height: 1.3;
+  }
+  .header-year-row {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid var(--border);
+    padding: 4px 14px;
+  }
+  .header-year-row label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    margin-right: 6px;
+  }
+  .header-year-row input[type="number"] {
+    width: 64px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2px 5px;
+    font-size: 12px;
+    font-family: inherit;
+    color: var(--text);
+  }
+
+  /* ── META ROW ── */
+  .meta-row {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 8px;
+    align-items: flex-end;
+  }
+  .meta-field {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    flex: 1;
+  }
+  .meta-field label {
+    font-family: 'Libre Franklin', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    white-space: nowrap;
+    color: var(--text);
+  }
+  .meta-field input {
+    flex: 1;
+    border: none;
+    border-bottom: 1.5px solid var(--text);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 12.5px;
+    color: var(--text);
+    background: transparent;
+    padding: 1px 2px;
+    outline: none;
+  }
+  .meta-field input:focus { border-bottom-color: var(--blue); }
+
+  /* ── INSTRUCTION ── */
+  .instruction {
+    font-size: 11.5px;
+    color: var(--muted);
+    margin-bottom: 9px;
+    line-height: 1.45;
+  }
+
+  /* ── TWO-COLUMN LAYOUT ── */
+  .columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 14px;
+  }
+  .col { display: flex; flex-direction: column; }
+
+  /* ── TABLE SECTION ── */
+  .section { margin-bottom: 4px; }
+
+  .section-head {
+    background: var(--blue);
+    color: #fff;
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: 3px 7px;
+  }
+
+  .budget-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--border);
+    border-top: none;
+  }
+  .budget-table tr:nth-child(even) { background: var(--row-alt); }
+  .budget-table td {
+    padding: 2px 5px;
+    border-bottom: 1px solid #dde3e8;
+    vertical-align: middle;
+  }
+  .budget-table td.cat {
+    font-size: 11.5px;
+    color: var(--text);
+    width: 68%;
+  }
+  .budget-table td.amt {
+    width: 32%;
+    text-align: right;
+  }
+  .budget-table td.amt input {
+    width: 100%;
+    border: 1px solid #d0dae2;
+    border-radius: var(--radius);
+    padding: 2px 5px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11.5px;
+    color: var(--text);
+    background: var(--input-bg);
+    text-align: right;
+    outline: none;
+  }
+  .budget-table td.amt input:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 2px rgba(26,58,92,.12);
+  }
+
+  /* ── TOTAL BAR ── */
+  .total-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    border: 2px solid var(--blue);
+    border-top: 3px solid var(--blue);
+    background: var(--blue-lt);
+    padding: 6px 12px;
+    margin-top: 10px;
+    gap: 12px;
+  }
+  .total-label {
+    font-family: 'Libre Franklin', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--blue);
+    letter-spacing: .03em;
+  }
+  .total-value {
+    font-family: 'Libre Franklin', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--accent);
+    min-width: 110px;
+    text-align: right;
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 3px 10px;
+    letter-spacing: .02em;
+  }
+
+  /* ── ACTION BUTTONS ── */
+  .action-bar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .btn {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    border-radius: var(--radius);
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: background .15s, color .15s;
+  }
+  .btn-print {
+    background: var(--blue);
+    color: #fff;
+    border-color: var(--blue);
+  }
+  .btn-print:hover { background: #122a44; border-color: #122a44; }
+  .btn-clear {
+    background: #fff;
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .btn-clear:hover { background: var(--accent); color: #fff; }
+
+  /* ── PRINT ── */
+  @media print {
+    .action-bar { display: none; }
+    @page { size: letter portrait; margin: 0.4in; }
+    body { background: none; padding: 0; display: block; }
+    .page {
+      box-shadow: none;
+      width: 100%;
+      min-height: auto;
+      padding: 0;
+    }
+    .budget-table td.amt input {
+      border: none;
+      border-bottom: 1px solid #999;
+      border-radius: 0;
+      box-shadow: none;
+      background: transparent;
+    }
+    .meta-field input { background: transparent; }
+    .header-year-row input { background: transparent; border: none; border-bottom: 1px solid #999; }
+    .total-value { color: var(--accent) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .section-head { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .header-title { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ACTION BUTTONS -->
+  <div class="action-bar">
+    <button class="btn btn-clear" onclick="clearForm()">Clear Form</button>
+    <button class="btn btn-print" onclick="window.print()">Print</button>
+  </div>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-title">CLIENT BUDGET</div>
+    <div class="header-right">
+      <div class="header-org">Carpenter's Homeless<br>Prevention Program</div>
+      <div class="header-year-row">
+        <label for="year">Year:</label>
+        <input type="number" id="year" min="2000" max="2100" placeholder="Year">
+      </div>
+    </div>
+  </div>
+
+  <!-- META -->
+  <div class="meta-row">
+    <div class="meta-field">
+      <label for="clientName">Name:</label>
+      <input type="text" id="clientName" required placeholder="Required">
+    </div>
+    <div class="meta-field" style="max-width:220px;">
+      <label for="formDate">Date:</label>
+      <input type="date" id="formDate">
+    </div>
+  </div>
+
+  <p class="instruction">These are expenses that you incur on a monthly basis. This budget is for everyone living in the household. If in doubt, include it on this budget form.</p>
+
+  <!-- TWO-COLUMN FORM -->
+  <div class="columns">
+    <!-- ══ COLUMN 1 ══ -->
+    <div class="col">
+
+      <div class="section">
+        <div class="section-head">Home</div>
+        <table class="budget-table">
+          <tr><td class="cat">Rent</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+          <tr><td class="cat">Home Repairs / Maintenance</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+          <tr><td class="cat">Home Improvements</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-head">Utilities</div>
+        <table class="budget-table">
+          <tr><td class="cat">Electricity</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+          <tr><td class="cat">Water and Sewer</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+          <tr><td class="cat">Natural Gas</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-head">Household</div>
+        <table class="budget-table">
+          <tr><td class="cat">Garbage</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+          <tr><td class="cat">Telephone Cell</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+          <tr><td class="cat">Telephone Land Line</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-head">Food</div>
+        <table class="budget-table">
+          <tr><td class="cat">Groceries</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+          <tr><td class="cat">Eating Out, Lunches, Snacks</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-head">Family Obligations</div>
+        <table class="budget-table">
+          <tr><td class="cat">Child Support</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+          <tr><td class="cat">Alimony</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+          <tr><td class="cat">Day Care / Babysitting</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-head">Health and Medical</div>
+        <table class="budget-table">
+          <tr><td class="cat">Insurance (medical, dental, vision)</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+          <tr><td class="cat">Unreimbursed Medical Expenses</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-head">Transportation</div>
+        <table class="budget-table">
+          <tr><td class="cat">Car Payment</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+          <tr><td class="cat">Gasoline / Oil</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+          <tr><td class="cat">Auto Repairs / Maintenance / Fees</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+          <tr><td class="cat">Auto Insurance</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+          <tr><td class="cat">Bus / Train / Taxi / Rideshare</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+        </table>
+      </div>
+
+    </div><!-- /col 1 -->
+
+    <!-- ══ COLUMN 2 ══ -->
+    <div class="col">
+
+      <div class="section">
+        <div class="section-head">Debt Payments</div>
+        <table class="budget-table">
+          <tr><td class="cat">Credit Cards</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+          <tr><td class="cat">Student Loans</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+          <tr><td class="cat">Court Fees / Fines</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+          <tr><td class="cat">Title Loan</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+          <tr><td class="cat">Payday Loan</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+          <tr><td class="cat">Other Loans</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-head">Entertainment / Recreation</div>
+        <table class="budget-table">
+          <tr><td class="cat">Cable TV / Videos / Movies</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+          <tr><td class="cat">Computer Expense</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+          <tr><td class="cat">Hobbies</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+          <tr><td class="cat">Subscriptions and Dues</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+          <tr><td class="cat">Vacations</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-head">Pets</div>
+        <table class="budget-table">
+          <tr><td class="cat">Food</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+          <tr><td class="cat">Grooming / Boarding / Vet</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-head">Clothing</div>
+        <table class="budget-table">
+          <tr><td class="cat">Clothing</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-head">Investments and Savings</div>
+        <table class="budget-table">
+          <tr><td class="cat">College Fund</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+          <tr><td class="cat">Savings</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+          <tr><td class="cat">Emergency Fund</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-head">Miscellaneous</div>
+        <table class="budget-table">
+          <tr><td class="cat">Tobacco, Alcohol, Other Drugs</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+          <tr><td class="cat">Toiletries / Household Products</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+          <tr><td class="cat">Gifts / Donations</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+          <tr><td class="cat">Grooming (Hair, Make-up, Other)</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+          <tr><td class="cat">Storage Fees</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+          <tr><td class="cat">Miscellaneous Expense</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+          <tr><td class="cat"><input type="text" placeholder="Other" style="width:100%;border:none;border-bottom:1px solid #cdd5db;font-family:inherit;font-size:11.5px;color:var(--text);background:transparent;outline:none;padding:1px 2px;"></td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td></tr>
+        </table>
+      </div>
+
+    </div><!-- /col 2 -->
+  </div><!-- /columns -->
+
+  <!-- TOTAL -->
+  <div class="total-bar">
+    <span class="total-label">TOTAL MONTHLY EXPENSES:</span>
+    <span class="total-value" id="totalDisplay">$0.00</span>
+  </div>
+
+</div><!-- /page -->
+
+<script>
+  function clearForm() {
+    if (!confirm('Clear all entered values?')) return;
+    document.getElementById('clientName').value = '';
+    document.querySelectorAll('[data-total]').forEach(inp => inp.value = '');
+    recalc();
+  }
+
+  const dateInput = document.getElementById('formDate');
+  const today = new Date();
+  dateInput.value = today.toISOString().slice(0, 10);
+
+  // Default year
+  const yearInput = document.getElementById('year');
+  yearInput.value = today.getFullYear();
+
+  // Live total calculation
+  function recalc() {
+    const inputs = document.querySelectorAll('[data-total]');
+    let sum = 0;
+    inputs.forEach(inp => {
+      const v = parseFloat(inp.value);
+      if (!isNaN(v) && v > 0) sum += v;
+    });
+    document.getElementById('totalDisplay').textContent =
+      '$' + sum.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  document.querySelectorAll('[data-total]').forEach(inp => {
+    inp.addEventListener('input', recalc);
+  });
+</script>
+</body>
+</html>
