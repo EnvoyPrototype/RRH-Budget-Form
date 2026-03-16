@@ -297,7 +297,7 @@ input[type="number"] { -moz-appearance: textfield; }
 
 /* ── PRINT ── */
 @media print {
-  @page { size: letter portrait; margin: 0.3in; }
+  @page { size: letter portrait; margin: 0.25in 0.3in; }
   .columns { grid-template-columns: 1fr 1fr !important; gap: 0 10px !important; }
   .action-bar { display: none; }
   body { background: none; padding: 0; display: block; }
@@ -308,14 +308,14 @@ input[type="number"] { -moz-appearance: textfield; }
     padding: 0;
   }
   /* tighten vertical rhythm */
-  .header { margin-bottom: 6px; }
-  .header-title { font-size: 15px; padding: 7px 16px; }
-  .header-org { font-size: 8.5px; padding: 4px 10px 2px; }
+  .header { margin-bottom: 4px; }
+  .header-title { font-size: 15px; padding: 6px 16px; }
+  .header-org { font-size: 8.5px; padding: 3px 10px 2px; }
   .header-year-row { padding: 2px 10px; }
-  .meta-row { margin-bottom: 5px; }
-  .instruction { font-size: 10px; margin-bottom: 6px; }
-  .section { margin-bottom: 3px; }
-  .section-head { font-size: 9px; padding: 2px 5px; }
+  .meta-row { margin-bottom: 3px; }
+  .instruction { font-size: 10px; margin-bottom: 4px; }
+  .section { margin-bottom: 2px; }
+  .section-head { font-size: 9px; padding: 1px 5px; }
   .budget-table td { padding: 1px 4px; }
   .budget-table td.cat { font-size: 10px; }
   .budget-table td.amt input {
@@ -327,7 +327,7 @@ input[type="number"] { -moz-appearance: textfield; }
     box-shadow: none;
     background: transparent;
   }
-  .total-bar { padding: 4px 10px; margin-top: 6px; }
+  .total-bar { padding: 3px 10px; margin-top: 4px; }
   .total-label { font-size: 11px; }
   .total-value { font-size: 13px; padding: 2px 8px; }
   .meta-field input { background: transparent; }
