@@ -35,6 +35,14 @@
   </div>
 
 
+  <!-- INCOME SECTION -->
+  <div class="income-section">
+    <div class="section-head">Anticipated Monthly Income</div>
+    <table class="budget-table">
+      <tr><td class="cat">Income from All Sources</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" inputmode="decimal" data-income></td></tr>
+    </table>
+  </div>
+
   <!-- TWO-COLUMN FORM -->
   <div class="columns">
     <!-- ══ COLUMN 1 ══ -->
@@ -164,17 +172,27 @@
           <tr><td class="cat">Grooming (Hair, Make-up, Other)</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" inputmode="decimal" data-total></td></tr>
           <tr><td class="cat">Storage Fees</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" inputmode="decimal" data-total></td></tr>
           <tr><td class="cat">Miscellaneous Expense</td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" inputmode="decimal" data-total></td></tr>
-          <tr><td class="cat"><input type="text" placeholder="Other" style="width:100%;border:none;border-bottom:1px solid #cdd5db;font-family:inherit;font-size:11.5px;color:var(--text);background:transparent;outline:none;padding:1px 2px;"></td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" inputmode="decimal" data-total></td></tr>
+          <tr><td class="cat"><input type="text" placeholder="Other" class="other-label" style="width:100%;border:none;border-bottom:1px solid #cdd5db;font-family:inherit;font-size:11.5px;color:var(--text);background:transparent;outline:none;padding:1px 2px;"></td><td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" inputmode="decimal" data-total></td></tr>
         </table>
       </div>
 
     </div><!-- /col 2 -->
   </div><!-- /columns -->
 
-  <!-- TOTAL -->
-  <div class="total-bar">
-    <span class="total-label">TOTAL MONTHLY EXPENSES:</span>
-    <span class="total-value" id="totalDisplay">$0.00</span>
+  <!-- SUMMARY -->
+  <div class="summary-bar">
+    <div class="summary-item">
+      <span class="summary-label">TOTAL INCOME:</span>
+      <span class="summary-value income-value" id="incomeDisplay">$0.00</span>
+    </div>
+    <div class="summary-item">
+      <span class="summary-label">TOTAL EXPENSES:</span>
+      <span class="summary-value expense-value" id="totalDisplay">$0.00</span>
+    </div>
+    <div class="summary-item">
+      <span class="summary-label">REMAINING BALANCE:</span>
+      <span class="summary-value balance-neutral" id="balanceDisplay">$0.00</span>
+    </div>
   </div>
 
 </div><!-- /page -->
