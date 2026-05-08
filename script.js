@@ -1,7 +1,8 @@
 function clearForm() {
   if (!confirm('Clear all entered values?')) return;
   document.getElementById('clientName').value = '';
-  document.querySelectorAll('[data-total], [data-income], .other-label').forEach(inp => inp.value = '');
+  document.getElementById('incomeInput').value = '';
+  document.querySelectorAll('[data-total], .other-label').forEach(inp => inp.value = '');
   recalc();
 }
 
@@ -11,11 +12,8 @@ dateInput.value = today.toISOString().slice(0, 10);
 
 
 function recalc() {
-  let incomeSum = 0;
-  document.querySelectorAll('[data-income]').forEach(inp => {
-    const v = parseFloat(inp.value);
-    if (!isNaN(v) && v > 0) incomeSum += v;
-  });
+  const incomeVal = parseFloat(document.getElementById('incomeInput').value);
+  const incomeSum = (!isNaN(incomeVal) && incomeVal > 0) ? incomeVal : 0;
 
   let expenseSum = 0;
   document.querySelectorAll('[data-total]').forEach(inp => {
@@ -34,6 +32,7 @@ function recalc() {
   balanceEl.className = 'summary-value ' + (incomeSum === 0 && expenseSum === 0 ? 'balance-neutral' : balance >= 0 ? 'balance-positive' : 'balance-negative');
 }
 
-document.querySelectorAll('[data-total], [data-income]').forEach(inp => {
+document.getElementById('incomeInput').addEventListener('input', recalc);
+document.querySelectorAll('[data-total]').forEach(inp => {
   inp.addEventListener('input', recalc);
 });
