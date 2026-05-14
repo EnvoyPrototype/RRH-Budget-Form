@@ -1,3 +1,22 @@
+function parseAmount(val) {
+  return parseFloat(String(val).replace(/[$,]/g, '')) || 0;
+}
+
+function formatCurrency(n) {
+  return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function attachCurrencyFormatting(input) {
+  input.addEventListener('focus', () => {
+    input.value = input.value.replace(/[$,]/g, '');
+  });
+  input.addEventListener('blur', () => {
+    const raw = parseFloat(input.value);
+    input.value = !isNaN(raw) && input.value.trim() !== '' ? formatCurrency(raw) : '';
+    recalc();
+  });
+}
+
 function clearForm() {
   if (!confirm('Clear all entered values?')) return;
   document.getElementById('clientName').value = '';
@@ -7,32 +26,50 @@ function clearForm() {
 }
 
 const dateInput = document.getElementById('formDate');
-const today = new Date();
-dateInput.value = today.toISOString().slice(0, 10);
-
+dateInput.value = new Date().toISOString().slice(0, 10);
 
 function recalc() {
-  const incomeVal = parseFloat(document.getElementById('incomeInput').value);
-  const incomeSum = (!isNaN(incomeVal) && incomeVal > 0) ? incomeVal : 0;
+  const incomeSum = parseAmount(document.getElementById('incomeInput').value);
 
   let expenseSum = 0;
   document.querySelectorAll('[data-total]').forEach(inp => {
-    const v = parseFloat(inp.value);
-    if (!isNaN(v) && v > 0) expenseSum += v;
+    const v = parseAmount(inp.value);
+    if (v > 0) expenseSum += v;
   });
 
   const balance = incomeSum - expenseSum;
-  const fmt = n => '$' + Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const neutral = incomeSum === 0 && expenseSum === 0;
 
-  document.getElementById('incomeDisplay').textContent = fmt(incomeSum);
-  document.getElementById('totalDisplay').textContent = fmt(expenseSum);
+  document.getElementById('incomeDisplay').textContent = formatCurrency(incomeSum);
+  document.getElementById('totalDisplay').textContent = formatCurrency(expenseSum);
 
   const balanceEl = document.getElementById('balanceDisplay');
-  balanceEl.textContent = (balance < 0 ? '-' : '') + fmt(balance);
-  balanceEl.className = 'summary-value ' + (incomeSum === 0 && expenseSum === 0 ? 'balance-neutral' : balance >= 0 ? 'balance-positive' : 'balance-negative');
+  if (neutral) {
+    balanceEl.textContent = formatCurrency(0);
+    balanceEl.className = 'summary-value balance-neutral';
+  } else if (balance >= 0) {
+    balanceEl.textContent = 'Surplus  ' + formatCurrency(balance);
+    balanceEl.className = 'summary-value balance-positive';
+  } else {
+    balanceEl.textContent = 'Deficit  ' + formatCurrency(Math.abs(balance));
+    balanceEl.className = 'summary-value balance-negative';
+  }
 }
 
-document.getElementById('incomeInput').addEventListener('input', recalc);
+const incomeInput = document.getElementById('incomeInput');
+attachCurrencyFormatting(incomeInput);
+incomeInput.addEventListener('input', recalc);
+
 document.querySelectorAll('[data-total]').forEach(inp => {
+  attachCurrencyFormatting(inp);
   inp.addEventListener('input', recalc);
+});
+
+// Generate aria-labels from table row text so screen readers announce each field
+document.querySelectorAll('.budget-table tr').forEach(row => {
+  const catCell = row.querySelector('td.cat');
+  const amtInput = row.querySelector('td.amt input');
+  if (!catCell || !amtInput) return;
+  const label = catCell.querySelector('input') ? 'Other expense' : catCell.textContent.trim();
+  if (label) amtInput.setAttribute('aria-label', label);
 });
