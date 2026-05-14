@@ -1,7 +1,6 @@
 # Client Budget Form
-**Carpenter's Homeless Prevention Program — Hesed House**
 
-A mobile-friendly web form for collecting monthly household expense information from clients. Staff can fill it out on an iPhone, then print it or save it as a PDF directly from the browser.
+A mobile-friendly web form for collecting monthly household income and expense information from clients. Staff can fill it out on an iPhone, then print it or save it as a PDF directly from the browser.
 
 ---
 
@@ -19,10 +18,11 @@ No app download or login is required.
 
 1. Enter the client's **Name** (this is the only required field).
 2. The **Date** will automatically be set to today. You can change it if needed by tapping on it.
-3. Fill in any monthly expense amounts that apply. Fields you leave blank are simply ignored.
-4. The **Total Monthly Expenses** at the bottom updates automatically as you type.
-5. When finished, tap **Print** to print or save as a PDF (see instructions below).
-6. To start over, tap **Clear Form**. You will be asked to confirm before anything is erased.
+3. Enter the client's **Anticipated Monthly Income**.
+4. Fill in any monthly expense amounts that apply. Fields you leave blank are simply ignored. Amounts auto-format to currency (e.g. `$1,200.00`) when you move to the next field.
+5. The **summary bar** at the bottom shows Total Income, Total Expenses, and Remaining Balance (labeled Surplus or Deficit) and updates automatically as you type.
+6. When finished, tap **Print** to print or save as a PDF (see instructions below).
+7. To start over, tap **Clear Form**. You will be asked to confirm before anything is erased.
 
 ---
 
@@ -79,16 +79,19 @@ This form is made up of three files that must be kept in the same folder:
 | File | Purpose |
 |---|---|
 | `index.html` | The form structure and content |
-| `styles.css` | All visual styling, including print layout |
-| `script.js` | Automatic date, live total calculation, and clear form logic |
+| `styles.css` | All visual styling, including mobile card layout and print layout |
+| `script.js` | Auto date, live calculations, currency formatting, and clear form logic |
 
 ---
 
 ## Features
 
-- **Mobile responsive** — single-column layout on phones, two-column on desktop
-- **Print optimized** — always prints as a compact, single-page letter-sized document regardless of device
-- **Live total** — monthly expense total updates automatically as values are entered
+- **Mobile responsive** — card-style layout on phones, two-column on desktop
+- **Sticky summary bar** — income, expenses, and surplus/deficit remain visible while scrolling on mobile
+- **Currency auto-format** — amounts format to `$1,200.00` on blur; numeric keyboard appears automatically on mobile
+- **Print optimized** — always prints as a compact, single-page letter-sized document with a border box
+- **Surplus / Deficit indicator** — remaining balance is labeled and color-coded
+- **Accessible** — all inputs have screen reader labels
 - **Auto date** — date field defaults to today's date
 - **No server required** — runs entirely in the browser, no internet connection needed once loaded
 
@@ -101,7 +104,7 @@ To update the list of expense categories, open `index.html` in a text editor and
 ```html
 <tr>
   <td class="cat">Category Name</td>
-  <td class="amt"><input type="number" min="0" step="0.01" placeholder="0.00" data-total></td>
+  <td class="amt"><input type="text" inputmode="decimal" placeholder="0.00" data-total></td>
 </tr>
 ```
 
@@ -114,4 +117,4 @@ To change colors or fonts, edit `styles.css`. The main brand color variables are
 
 ---
 
-*Form ID: C02B Client Budget — Last updated March 2026*
+*Last updated May 2026*
